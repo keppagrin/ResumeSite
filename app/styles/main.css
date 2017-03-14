@@ -18,14 +18,18 @@ nav {
   position: fixed;
   top:0;
 }
+.buffer {
+  padding-top:80px;
+}
 
 .fullheight {
   height:100vh;
   width:100%;
 }
 .dark {
+  padding-top:70px;
   background-color: black;
-  background-image: url('../images/clamdown.png');
+  background-image: url("../images/woven-square.png");
 }
 body {
   background: #BFC0C0;
@@ -67,8 +71,25 @@ header h3 {
   z-index: -20;
 }
 
+h2 {
+  font-family: 'Copse', serif;
+}
+
 .section {
   padding:0;
+}
+
+#fill {
+  margin-top:7vh;
+}
+
+.chart rect {
+  stroke:silver;
+}
+
+.chart {
+  background-color: #eceff1;
+  box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .back {
