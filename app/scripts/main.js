@@ -1,5 +1,4 @@
 $(function() {
-	$('.carousel').carousel();
 	$('.tlt').textillate({
 		in: {
 			effect: 'fadeInDown',
@@ -11,8 +10,6 @@ $(function() {
 		},
 		loop: true
 	});
-
-
 
     var wH = $(window).height(),
         top;
@@ -52,112 +49,414 @@ $(function() {
     //The D3-ening
     var drawn=false;
 
-    var data = [5,10,20,30,40,50];
+    function drawSkills(){
+    	//html/css, js, c#, php, sql
+    	var data = [47,31,39,25,15];
 
-    var chart = d3.select('#fill')
-    	.append('svg:svg')
-    		.attr('class','chart')
-    		.attr('width',570)
-    		.attr('height',55*data.length)
-    	.append('svg:g')
-    		.attr('transform', 'translate(30,40)');
+	    var chart = d3.select('#fill1')
+	    	.append('svg:svg')
+	    		.attr('class','chart')
+	    		.attr('width',580)
+	    		.attr('height',65*data.length)
 
-    var x = d3.scaleLinear()
-    	.domain([0,d3.max(data)])
-    	.range([0,500]);
-
-    chart.selectAll('line')
-   			.data(x.ticks(10))
-   		.enter().append('svg:line')
-   			.attr('x1',x)
-   			.attr('x2',x)
-   			.attr('y1',0)
-   			.attr('y2',265)
-   			.attr('stroke','#0D1F2D');
-
-   	chart.selectAll('text.rule')
-   			.data(x.ticks(10))
-   		.enter().append('svg:text')
-   			.attr('class','rule')
-   			.attr('x',x)
-   			.attr('y',0)
-   			.attr('dy',-3)
-   			.attr('text-anchor','middle')
-   			.text(String);
-
-   	chart.append('svg:line')
-   		.attr('y1',0)
-   		.attr('y2',265)
-   		.attr('stroke','#0D1F2D');
+	    	.append('svg:g')
+	    		.attr('transform', 'translate(30,90)');
 
 
-    chart.selectAll('rect')
-    		.data(data)
-    	.enter().append('svg:rect')
-    		.attr('y',function(d, i){ return i * 45; })
-    		.attr('width', x)
-    		.attr('height',40);
+	    var x = d3.scaleLinear()
+	    	.domain([0,d3.max(data)])
+	    	.range([0,500]);
 
-    d3.selectAll('rect')
-	    .attr('fill','#0D1F2D')
-    	//adds hover color change
-        .on('mouseover', function() {
-          d3.select(this)
-            .attr('fill', 'orange')
-        })
-        //changes back when not hovered
-        .on('mouseout', function() {
-          d3.select(this)
-            .transition()
-            .duration(320)
-            .attr('fill', '#0D1F2D');
-        });
+	    chart.selectAll('line')
+	   			.data(x.ticks(5))
+	   		.enter().append('svg:line')
+	   			.attr('x1',x)
+	   			.attr('x2',x)
+	   			.attr('y1',-10)
+	   			.attr('y2',220)
+	   			.attr('stroke','#0D1F2D');
+
+	   			/* This gives numbers on the axes.
+	   	chart.selectAll('text.rule')
+	   			.data(x.ticks(10))
+	   		.enter().append('svg:text')
+	   			.attr('class','rule')
+	   			.attr('x',x)
+	   			.attr('y',0)
+	   			.attr('dy',-3)
+	   			.attr('text-anchor','middle')
+	   			.text(String);
+	   			*/
+
+	   	//top line
+	   	chart.append('svg:line')
+	   		.attr('x1',0)
+	   		.attr('x2',520)
+	   		.attr('y1',-10)
+	   		.attr('y2',-10)
+	   		.attr('stroke','#0D1F2D');
+		//bottom line
+	   	chart.append('svg:line')
+	   		.attr('x1',0)
+	   		.attr('x2',520)
+	   		.attr('y1',220)
+	   		.attr('y2',220)
+	   		.attr('stroke','#0D1F2D');
+
+	   	//last line
+	   	chart.append('svg:line')
+	   		.attr('x1',520)
+	   		.attr('x2',520)
+	   		.attr('y1',-10)
+	   		.attr('y2',220)
+	   		.attr('stroke','#000');
 
 
-    function makeBarGraph (){
-      /* Animated D3 bargraph adapted from codepen by Anthony Skelton
-      ================================================
-      // http://codepen.io/ajskelton/pen/Lkniv
-      */
-      dataset = [30, 11, 8, 13, 14, 15]
-      //Width and height
-      var w = 500;
-      var h = 300;
-      //Create SVG element
-      var svg = d3.select('#fill')
-        .append('svg')
-        .attr('width', w)
-        .attr('height', h);
 
-      var bars = svg.selectAll('rect')
-        .data(dataset)
-        .enter()
-        .append('rect')
-        .attr('fill', 'teal')
-        .attr('x', function(d, i) {
-          return i * (w / dataset.length);
-        })
-        .attr('y', h - 1)
-        .attr('width', 20)
-        .attr('height', 1)
+	    var bars = chart.selectAll('rect')
+	    		.data(data)
+	    	.enter().append('svg:rect')
+	    		.attr('y',function(d, i){ return i * 45; })
+	    		.attr('width', 1)
+	    		.attr('height',40)
+	    		.attr('fill','#0D1F2D')
 
-        
+	    	.on('mouseover', function() {
+	          d3.select(this)
+		        .transition()
+	            .duration(200)
+	            .attr('fill', 'orange');
+	        })
+	        //changes back when not hovered
+	        .on('mouseout', function() {
+	          d3.select(this)
+	            .transition()
+	            .duration(320)
+	            .attr('fill', '#0D1F2D');
+	        })
 
-      bars.transition()
-        .duration(1000)
-        .delay(100)
-        .attr('y', function(d) {
-          return h - (d * 4); //Height minus data value
-        })
-        .attr('height', function(d) {
-          return d * 4;
-        }) //end bargraph js
 
+	    //hardcoded labels :(
+	    //better than no labels
+	    //scale 0-5
+	    //familiar comfortable proficient advanced expert
+	    chart.append('text')
+    		.attr('x',0)
+    		.attr('y',-20)
+    		.attr('class','label')
+    		.text('Learning');
+		chart.append('text')
+			.attr('x',88)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Familiar');
+		chart.append('text')
+			.attr('x',178)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Comfortable');
+		chart.append('text')
+			.attr('x',293)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Proficient');
+		chart.append('text')
+			.attr('x',397)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Advanced');
+		chart.append('text')
+			.attr('x',495)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Wow');
+		chart.append('text')
+			.attr('x',225)
+			.attr('y',-50)
+			.attr('class','title')
+			.text('Coding')
+
+		var counter=0;
+    	bars.transition()
+	        .duration(1000)
+	        .delay(100)
+	        .attr('width', function(d) {
+	          return x - (d * 4); //Height minus data value
+	        })
+	        .attr('width', function(d) {
+	          return d * 10;
+	        })
+	        .on('end',function(){
+	        	//apply labels to bars after they grow out
+	        	
+	        	switch(counter) {
+	        		case 0:
+		        		chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',25)
+				        	.attr('class','barlabel')
+				        	.text('HTML/CSS')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 1:
+				        chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',70)
+				        	.attr('class','barlabel')
+				        	.text('JavaScript')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 2:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',115)
+				        	.attr('class','barlabel')
+				        	.text('C#')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 3:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',160)
+				        	.attr('class','barlabel')
+				        	.text('PHP')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 4:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',205)
+				        	.attr('class','barlabel')
+				        	.text('SQL')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 5:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',250)
+				        	.attr('class','barlabel')
+				        	.text('wow')
+				        	.transition().style('opacity',1);
+			        	break;
+			        default:
+			        	console.log('noot');
+			        	break;
+	        	}
+	        	counter++;
+	        });
+
+	    drawn = true;
     }
-    /*  Adapted from stackoverflow
 
-        http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport/7557433#7557433
-    */
+    function drawSoftware() {
+    	//premiere, ps, flash. unity, blender
+    	var data = [30,48,26,42,35];
+
+	    var chart = d3.select('#fill2')
+	    	.append('svg:svg')
+	    		.attr('class','chart')
+	    		.attr('width',580)
+	    		.attr('height',65*data.length)
+
+	    	.append('svg:g')
+	    		.attr('transform', 'translate(30,90)');
+
+
+	    var x = d3.scaleLinear()
+	    	.domain([0,d3.max(data)])
+	    	.range([0,500]);
+
+	    chart.selectAll('line')
+	   			.data(x.ticks(5))
+	   		.enter().append('svg:line')
+	   			.attr('x1',x)
+	   			.attr('x2',x)
+	   			.attr('y1',-10)
+	   			.attr('y2',220)
+	   			.attr('stroke','#0D1F2D');
+
+	   			/* This gives numbers on the axes.
+	   	chart.selectAll('text.rule')
+	   			.data(x.ticks(10))
+	   		.enter().append('svg:text')
+	   			.attr('class','rule')
+	   			.attr('x',x)
+	   			.attr('y',0)
+	   			.attr('dy',-3)
+	   			.attr('text-anchor','middle')
+	   			.text(String);
+	   			*/
+
+	   	//top line
+	   	chart.append('svg:line')
+	   		.attr('x1',0)
+	   		.attr('x2',520)
+	   		.attr('y1',-10)
+	   		.attr('y2',-10)
+	   		.attr('stroke','#0D1F2D');
+
+	   	//bottom line
+	   	chart.append('svg:line')
+	   		.attr('x1',0)
+	   		.attr('x2',520)
+	   		.attr('y1',220)
+	   		.attr('y2',220)
+	   		.attr('stroke','#0D1F2D');
+
+	   	//last line
+	   	chart.append('svg:line')
+	   		.attr('x1',520)
+	   		.attr('x2',520)
+	   		.attr('y1',-10)
+	   		.attr('y2',220)
+	   		.attr('stroke','#000');
+
+
+	    var bars = chart.selectAll('rect')
+	    		.data(data)
+	    	.enter().append('svg:rect')
+	    		.attr('y',function(d, i){ return i * 45; })
+	    		.attr('width', 1)
+	    		.attr('height',40)
+	    		.attr('fill','#0D1F2D')
+
+	    	.on('mouseover', function() {
+	          d3.select(this)
+		        .transition()
+	            .duration(200)
+	            .attr('fill', 'orange');
+	        })
+	        //changes back when not hovered
+	        .on('mouseout', function() {
+	          d3.select(this)
+	            .transition()
+	            .duration(320)
+	            .attr('fill', '#0D1F2D');
+	        })
+
+
+	    //hardcoded labels :(
+	    //better than no labels
+	    //scale 0-5
+	    //familiar comfortable proficient advanced expert
+	    chart.append('text')
+    		.attr('x',0)
+    		.attr('y',-20)
+    		.attr('class','label')
+    		.text('Learning');
+		chart.append('text')
+			.attr('x',82)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Familiar');
+		chart.append('text')
+			.attr('x',170)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Comfortable');
+		chart.append('text')
+			.attr('x',285)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Proficient');
+		chart.append('text')
+			.attr('x',385)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Advanced');
+		chart.append('text')
+			.attr('x',495)
+			.attr('y',-20)
+			.attr('class','label')
+			.text('Wow');
+		chart.append('text')
+			.attr('x',225)
+			.attr('y',-50)
+			.attr('class','title')
+			.text('Software')
+
+		var counter2=0;
+    	bars.transition()
+	        .duration(1000)
+	        .delay(100)
+	        .attr('width', function(d) {
+	          return x - (d * 4); //Height minus data value
+	        })
+	        .attr('width', function(d) {
+	          return d * 10;
+	        })
+	        .on('end',function(){
+	        	//apply labels to bars after they grow out
+	        	
+	        	switch(counter2) {
+	        		case 0:
+		        		chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',25)
+				        	.attr('class','barlabel')
+				        	.text('Premiere CC')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 1:
+				        chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',70)
+				        	.attr('class','barlabel')
+				        	.text('Photoshop CC')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 2:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',115)
+				        	.attr('class','barlabel')
+				        	.text('Flash')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 3:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',160)
+				        	.attr('class','barlabel')
+				        	.text('Unity 4/5')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 4:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',205)
+				        	.attr('class','barlabel')
+				        	.text('Blender')
+				        	.transition().style('opacity',1);
+			        	break;
+			        case 5:
+			        	chart.append('text')
+				        	.style('opacity',0)
+			        		.attr('x',10)
+				        	.attr('y',250)
+				        	.attr('class','barlabel')
+				        	.text('wow')
+				        	.transition().style('opacity',1);
+			        	break;
+			        default:
+			        	console.log('noot');
+			        	break;
+	        	}
+	        	counter2++;
+	        });
+    }
+
     function isElementInViewport (el) {
       //special bonus for those using jQuery
       if (typeof jQuery === 'function' && el instanceof jQuery) {
@@ -173,6 +472,30 @@ $(function() {
           rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
       );
     }
+    
+    var el = document.getElementById('fill1');
+    function onVisibilityChange(el, callback) {
+      var old_visible;
+      return function () {
+          var visible = isElementInViewport(el);
+          if (visible != old_visible) {
+              old_visible = visible;
+              if (typeof callback == 'function') {
+                  callback();
+              }
+          }
+      }
+    }
 
+    var handler = onVisibilityChange(el, function() {
+      if (drawn == false) {
+        if (isElementInViewport(document.getElementById('fill1'))) {
+          //alert("here");
+          drawSkills();
+          drawSoftware();
+        }
+      }
+    });
 
+    $(window).on('DOMContentLoaded load resize scroll', handler);
 });

@@ -23,11 +23,12 @@ nav {
 }
 
 .fullheight {
-  height:100vh;
+  min-height:100vh;
   width:100%;
 }
 .dark {
-  padding-top:70px;
+  padding-top:10vh;
+  padding-bottom:5vh;
   background-color: black;
   background-image: url("../images/woven-square.png");
 }
@@ -79,8 +80,14 @@ h2 {
   padding:0;
 }
 
-#fill {
-  margin-top:7vh;
+.skillHolder{
+  padding-top:7vh;
+}
+
+#fill1,#fill2 {
+  padding:0;
+  padding-left:2.2vw;
+  padding-right:2vw;
 }
 
 .chart rect {
@@ -91,7 +98,45 @@ h2 {
   background-color: #eceff1;
   box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
+.label {
+  z-index: 100;
+  font-size:13px;
+  margin:0;
+}
+.barlabel {
+  fill:white;
+}
+.title {
+  font-size:26px;
+}
 
 .back {
  z-index: inherit;
 }
+
+footer {
+  padding:20px;
+}
+footer ul {
+  margin:0;
+}
+footer li {
+  display:inline;
+}
+
+.icon {
+  width:35px;
+}
+
+.icon:hover {
+  -webkit-animation: pulse 1s;
+  animation: pulse 1s;
+}
+
+
+
+
+
+
+
+
